@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { Search, Bell, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,33 +25,37 @@ export function Header() {
   }
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b-4 border-primary">
+    <header className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur border-b border-border">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src="/usopp-logo.png" alt="Usopp Logo" width={40} height={40} className="object-contain" />
-              <div className="text-2xl font-black text-primary tracking-tight transform -rotate-1">USOPP</div>
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <Image src="/usopp-logo.png" alt="otaku-san Logo" width={36} height={36} className="object-contain" />
+            <Link href="/" className="text-xl font-bold text-foreground hover:text-accent transition-colors">
+              otaku-san
             </Link>
-
-            {/* Navigation Links */}
-            <nav className="hidden md:flex items-center gap-6">
-              <Link
-                href="/"
-                className="text-sm font-bold text-foreground hover:text-accent transition-colors transform hover:-rotate-1"
-              >
-                Home
-              </Link>
-              <Link
-                href="/tv-shows"
-                className="text-sm font-bold text-muted-foreground hover:text-accent transition-colors transform hover:rotate-1"
-              >
-                Anime
-              </Link>
-            </nav>
           </div>
 
-          {/* Search, Notifications, User Menu */}
+          {/* Center Navigation */}
+          <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              My library
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Schedule
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Manga
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Discover
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              AniList
+            </Link>
+          </nav>
+
+          {/* Right Actions */}
           <div className="flex items-center gap-4">
             {isSearchOpen ? (
               <form
@@ -61,8 +64,8 @@ export function Header() {
               >
                 <Input
                   type="search"
-                  placeholder="Search titles..."
-                  className="w-64 bg-secondary border-2 border-primary text-foreground placeholder:text-muted-foreground"
+                  placeholder="Search anime..."
+                  className="w-64 bg-secondary border border-border text-foreground placeholder:text-muted-foreground rounded-lg"
                   autoFocus
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -72,7 +75,7 @@ export function Header() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsSearchOpen(false)}
-                  className="text-muted-foreground hover:text-accent hover:bg-primary/20"
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   <Search className="h-5 w-5" />
                 </Button>
@@ -82,25 +85,22 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-muted-foreground hover:text-accent hover:bg-primary/20"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <Search className="h-5 w-5" />
               </Button>
             )}
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-accent hover:bg-primary/20">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground relative">
               <Bell className="h-5 w-5" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-accent rounded-full" />
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-accent hover:bg-primary/20"
-                >
+                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-secondary border-2 border-primary">
+              <DropdownMenuContent align="end" className="w-48 bg-card border border-border">
                 <DropdownMenuItem asChild>
                   <Link href="/continue-watching" className="cursor-pointer">
                     Continue Watching

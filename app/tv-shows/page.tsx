@@ -1,4 +1,5 @@
 import { Header } from "@/components/header"
+import { Sidebar } from "@/components/sidebar"
 import { ContentRow } from "@/components/content-row"
 import { Footer } from "@/components/footer"
 import {
@@ -21,10 +22,11 @@ export default async function TVShowsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="pt-24">
-        <div className="container mx-auto px-4 mb-8">
-          <h1 className="text-4xl font-bold text-foreground">Anime Series</h1>
-          <p className="text-muted-foreground mt-2">Discover the best anime series</p>
+      <Sidebar />
+      <main className="ml-20 pt-24">
+        <div className="px-8 mb-12">
+          <h1 className="text-4xl font-bold text-foreground mb-2">Anime Series</h1>
+          <p className="text-muted-foreground">Discover the best anime series from around the world</p>
         </div>
         <div className="space-y-12 pb-20">
           <ContentRow title="Trending Anime" items={trending} />

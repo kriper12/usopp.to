@@ -39,13 +39,12 @@ export function HeroSection({ items }: HeroSectionProps) {
     const index = emblaApi.selectedScrollSnap()
     setSelectedIndex(index)
 
-    // Pause all trailers
     trailerRefs.current.forEach((iframe, i) => {
       if (!iframe) return
       const src = iframe.src
-      iframe.src = "" // reset
+      iframe.src = ""
       if (i === index && items[i].trailer) {
-        iframe.src = `${items[i].trailer}?autoplay=1&mute=1` // autoplay only active slide
+        iframe.src = `${items[i].trailer}?autoplay=1&mute=1`
       }
     })
   }, [emblaApi, items])
@@ -97,20 +96,19 @@ export function HeroSection({ items }: HeroSectionProps) {
 
   if (items.length === 0) {
     const placeholderItem = {
-      title: "The Quantum Paradox",
-      overview:
-        "When a brilliant physicist discovers a way to manipulate time, she must race against a shadowy organization to prevent the collapse of reality itself.",
+      title: "Anime Adventure",
+      overview: "Explore thousands of anime titles with otaku-san. Stream your favorites anytime, anywhere.",
       rating: "9.2",
       year: "2024",
-      type: "Movie",
-      backdrop: "/sci-fi-movie-scene.png",
-      trailer: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      type: "Series",
+      backdrop: "/placeholder.svg",
+      trailer: "",
     }
     items = [placeholderItem]
   }
 
   return (
-    <section className="relative h-[85vh] mt-16 overflow-hidden border-b-4 border-primary">
+    <section className="relative h-[70vh] mt-16 overflow-hidden">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {items.map((item, index) => (
@@ -121,55 +119,43 @@ export function HeroSection({ items }: HeroSectionProps) {
                   alt={item.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
               </div>
 
-              <div className="relative container mx-auto px-4 lg:px-8 h-[85vh] flex items-center">
+              <div className="relative ml-20 h-[70vh] flex items-center">
                 <div className="max-w-2xl space-y-6">
                   <div className="flex items-center gap-3">
-                    <Badge
-                      variant="secondary"
-                      className="bg-accent text-accent-foreground border-2 border-accent text-xs font-black px-3 py-1 transform -rotate-2"
-                    >
+                    <Badge className="bg-accent text-accent-foreground border border-accent text-xs font-bold px-3 py-1">
                       HD
                     </Badge>
-                    <Badge
-                      variant="secondary"
-                      className="bg-primary text-primary-foreground border-2 border-primary text-xs font-black px-3 py-1 transform rotate-1"
-                    >
-                      Featured
+                    <Badge className="bg-primary text-primary-foreground border border-primary text-xs font-bold px-3 py-1">
+                      Trending
                     </Badge>
                   </div>
 
-                  <h1 className="text-5xl md:text-7xl font-black text-balance leading-tight transform -rotate-1">
-                    {item.title}
-                  </h1>
+                  <h1 className="text-6xl font-bold text-balance leading-tight">{item.title}</h1>
 
-                  <div className="flex items-center gap-4 text-sm font-bold">
-                    <span className="text-accent text-lg">{item.rating}</span>
+                  <div className="flex items-center gap-4 text-sm font-semibold">
+                    <span className="text-accent text-lg">★ {item.rating}</span>
                     <span className="text-muted-foreground">{item.year}</span>
                     <span className="text-muted-foreground">{item.type}</span>
                   </div>
 
-                  <p className="text-lg text-muted-foreground leading-relaxed text-pretty max-w-xl line-clamp-3">
+                  <p className="text-base text-muted-foreground leading-relaxed text-pretty max-w-lg line-clamp-3">
                     {item.overview}
                   </p>
 
                   <div className="flex items-center gap-4 pt-4">
                     <Link href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
-                      <Button
-                        size="lg"
-                        className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 px-8 font-black border-2 border-primary transform hover:scale-105 transition-transform"
-                      >
+                      <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 px-8 font-bold border border-accent">
                         <Play className="h-5 w-5 fill-current" />
-                        Watch Now
+                        Play
                       </Button>
                     </Link>
                     <Button
-                      size="lg"
                       variant="outline"
-                      className={`gap-2 font-black border-2 transform hover:scale-105 transition-transform ${isSaved ? "border-accent bg-accent/20 text-accent" : "border-secondary bg-secondary/50 text-foreground"}`}
+                      className={`gap-2 font-bold border ${isSaved ? "border-accent bg-accent/20 text-accent" : "border-border text-foreground"}`}
                       onClick={handleSaveToggle}
                     >
                       {isSaved ? (
@@ -180,13 +166,12 @@ export function HeroSection({ items }: HeroSectionProps) {
                       ) : (
                         <>
                           <Plus className="h-5 w-5" />
-                          My List
+                          Bookmark
                         </>
                       )}
                     </Button>
                   </div>
 
-                  {/* Hidden iframe for autoplay trailers */}
                   {item.trailer && (
                     <iframe
                       ref={(el) => (trailerRefs.current[index] = el!)}
@@ -207,15 +192,15 @@ export function HeroSection({ items }: HeroSectionProps) {
       {/* Controls */}
       <button
         onClick={scrollPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-primary/80 hover:bg-primary text-white p-2 rounded-full transition-all border-2 border-accent transform hover:scale-110"
+        className="absolute left-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
       >
-        <ChevronLeft className="h-8 w-8" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
       <button
         onClick={scrollNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-primary/80 hover:bg-primary text-white p-2 rounded-full transition-all border-2 border-accent transform hover:scale-110"
+        className="absolute right-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
       >
-        <ChevronRight className="h-8 w-8" />
+        <ChevronRight className="h-6 w-6" />
       </button>
 
       {/* Pagination */}
@@ -224,10 +209,8 @@ export function HeroSection({ items }: HeroSectionProps) {
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`h-3 rounded-full transition-all border-2 ${
-              index === selectedIndex
-                ? "w-10 bg-accent border-accent"
-                : "w-3 bg-white/50 border-white/50 hover:bg-white/70 hover:border-white/70"
+            className={`h-2 rounded-full transition-all ${
+              index === selectedIndex ? "w-8 bg-accent" : "w-2 bg-white/40 hover:bg-white/60"
             }`}
           />
         ))}

@@ -19,10 +19,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <title>Usopp - Adventure Streaming</title>
+        <title>otaku-san - Anime Streaming Platform</title>
         <meta
           name="description"
-          content="Your adventurous destination for streaming. Discover unlimited movies and TV shows with the brave warrior of the sea!"
+          content="Discover and stream unlimited anime with otaku-san. Your ultimate destination for anime series and movies."
         />
       </Head>
       <body className={`${geistSans} ${geistMono} antialiased`}>

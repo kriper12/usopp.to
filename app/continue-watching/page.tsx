@@ -1,9 +1,9 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
+import { Sidebar } from "@/components/sidebar"
 import { Footer } from "@/components/footer"
 import { getContinueWatching, removeFromContinueWatching, type ContinueWatchingItem } from "@/lib/continue-watching"
 import Link from "next/link"
@@ -39,7 +39,8 @@ export default function ContinueWatchingPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container mx-auto px-4 pt-24 pb-20">
+      <Sidebar />
+      <main className="ml-20 px-8 pt-24 pb-20">
         <div className="space-y-8">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-2">Continue Watching</h1>
@@ -60,7 +61,7 @@ export default function ContinueWatchingPage() {
                 <div key={item.id} className="space-y-2">
                   <Link
                     href={`/watch/${item.anilistId}?type=${item.type}`}
-                    className="group relative aspect-[2/3] rounded-lg overflow-hidden bg-secondary hover:ring-2 hover:ring-primary transition-all block"
+                    className="group relative aspect-[2/3] rounded-lg overflow-hidden bg-secondary hover:ring-2 hover:ring-accent transition-all block"
                   >
                     <Image
                       src={item.posterPath || "/placeholder.svg"}
@@ -70,7 +71,7 @@ export default function ContinueWatchingPage() {
                     />
 
                     <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-secondary/50">
-                      <div className="h-full bg-primary transition-all" style={{ width: `${item.progress}%` }} />
+                      <div className="h-full bg-accent transition-all" style={{ width: `${item.progress}%` }} />
                     </div>
 
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -80,13 +81,13 @@ export default function ContinueWatchingPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 hover:bg-black/70 text-white"
+                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 hover:bg-black/70 text-white rounded-full"
                       onClick={(e) => handleRemove(item.id, e)}
                     >
                       <X className="h-4 w-4" />
                     </Button>
 
-                    <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-semibold">
                       {Math.round(item.progress)}%
                     </div>
                   </Link>

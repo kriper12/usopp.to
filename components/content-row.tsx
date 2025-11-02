@@ -11,8 +11,9 @@ import Link from "next/link"
 import { saveItem, removeItem, isItemSaved } from "@/lib/my-rovex"
 
 interface ContentRowProps {
-  title: string
+  title?: string
   items: ContentItem[]
+  showThumbnails?: boolean
 }
 
 const placeholderItems: ContentItem[] = Array.from({ length: 8 }, (_, i) => ({
@@ -25,7 +26,7 @@ const placeholderItems: ContentItem[] = Array.from({ length: 8 }, (_, i) => ({
   overview: "Explore anime from AniList",
 }))
 
-export function ContentRow({ title, items }: ContentRowProps) {
+export function ContentRow({ title, items, showThumbnails = false }: ContentRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
@@ -47,59 +48,72 @@ export function ContentRow({ title, items }: ContentRowProps) {
     }
   }
 
+  if (showThumbnails) {
+    return (
+      <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
+        {displayItems.slice(0, 8).map((item) => (
+          <Link
+            key={item.id}
+            href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}
+            className="group relative flex-shrink-0 w-40 h-56 rounded-lg overflow-hidden bg-secondary hover:ring-2 hover:ring-accent transition-all"
+          >
+            <img
+              src={item.image || "/placeholder.svg"}
+              alt={item.title}
+              className="w-full h-full object-cover transition-transform group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <Play className="h-8 w-8 text-white" fill="white" />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent text-white">
+              <p className="text-xs font-semibold line-clamp-2">{item.title}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <section className="relative group/row">
-      <div className="container mx-auto px-4 lg:px-8">
-        <h2 className="text-2xl font-black mb-6 text-primary transform -rotate-1 inline-block border-b-4 border-accent pb-1">
-          {title}
-        </h2>
-
-        <div className="relative">
-          {showLeftArrow && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full w-12 rounded-none bg-primary/80 hover:bg-primary/95 opacity-0 group-hover/row:opacity-100 transition-opacity border-r-2 border-accent"
-              onClick={() => scroll("left")}
-            >
-              <ChevronLeft className="h-8 w-8 text-foreground" />
-            </Button>
-          )}
-
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            onWheel={(e) => {
-              // Prevent vertical scrolling inside the row
-              if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                e.preventDefault()
-              }
-              // Optional: allow vertical wheel to scroll row horizontally
-              if (e.deltaY !== 0) {
-                scrollRef.current?.scrollBy({
-                  left: e.deltaY,
-                  behavior: "smooth",
-                })
-              }
-            }}
-          >
-            {displayItems.map((item) => (
-              <ContentCard key={item.id} item={item} />
-            ))}
-          </div>
-
-          {showRightArrow && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-full w-12 rounded-none bg-primary/80 hover:bg-primary/95 opacity-0 group-hover/row:opacity-100 transition-opacity border-l-2 border-accent"
-              onClick={() => scroll("right")}
-            >
-              <ChevronRight className="h-8 w-8 text-foreground" />
-            </Button>
-          )}
+      {title && (
+        <div className="px-8 mb-6">
+          <h2 className="text-2xl font-bold text-foreground">{title}</h2>
         </div>
+      )}
+
+      <div className="relative px-8">
+        {showLeftArrow && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-primary/80 hover:bg-primary/95 opacity-0 group-hover/row:opacity-100 transition-opacity"
+            onClick={() => scroll("left")}
+          >
+            <ChevronLeft className="h-6 w-6 text-foreground" />
+          </Button>
+        )}
+
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {displayItems.map((item) => (
+            <ContentCard key={item.id} item={item} />
+          ))}
+        </div>
+
+        {showRightArrow && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-primary/80 hover:bg-primary/95 opacity-0 group-hover/row:opacity-100 transition-opacity"
+            onClick={() => scroll("right")}
+          >
+            <ChevronRight className="h-6 w-6 text-foreground" />
+          </Button>
+        )}
       </div>
     </section>
   )
@@ -137,7 +151,7 @@ function ContentCard({ item }: { item: ContentItem }) {
 
   return (
     <Card
-      className="relative flex-shrink-0 w-[200px] md:w-[240px] bg-card border-2 border-primary overflow-hidden group cursor-pointer transition-all duration-300 hover:scale-105 hover:z-10 hover:border-accent hover:shadow-lg hover:shadow-accent/50"
+      className="relative flex-shrink-0 w-40 bg-card border border-border overflow-hidden group cursor-pointer transition-all duration-300 hover:scale-110 hover:z-10 hover:border-accent"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -146,38 +160,38 @@ function ContentCard({ item }: { item: ContentItem }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
         {isHovered && (
-          <div className="absolute inset-0 flex items-center justify-center gap-2 animate-in fade-in zoom-in-95 duration-200">
+          <div className="absolute inset-0 flex items-center justify-center gap-2 animate-in fade-in zoom-in-95 duration-200 bg-black/40">
             <Link href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
               <Button
                 size="icon"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full h-12 w-12 border-2 border-accent transform hover:scale-110 transition-transform"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full h-10 w-10 border border-accent transform hover:scale-110 transition-transform"
               >
-                <Play className="h-5 w-5 fill-current" />
+                <Play className="h-4 w-4 fill-current" />
               </Button>
             </Link>
             <Button
               size="icon"
               variant="outline"
-              className={`${isSaved ? "bg-accent/20 border-accent text-accent" : "bg-secondary/80 border-secondary"} hover:bg-secondary rounded-full h-12 w-12 border-2 transform hover:scale-110 transition-transform`}
+              className={`${isSaved ? "bg-accent/20 border-accent text-accent" : "bg-secondary/80 border-border"} hover:bg-secondary rounded-full h-10 w-10 border transform hover:scale-110 transition-transform`}
               onClick={handleSaveToggle}
             >
-              {isSaved ? <Check className="h-5 w-5" /> : <Plus className="h-5 w-5 text-foreground" />}
+              {isSaved ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
             </Button>
           </div>
         )}
 
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-2 right-2 z-10">
           <Badge
             variant="secondary"
-            className="bg-accent text-accent-foreground border-2 border-accent text-xs font-black transform rotate-3"
+            className="bg-accent text-accent-foreground border border-accent text-xs font-bold"
           >
             {item.rating}
           </Badge>
         </div>
       </div>
 
-      <div className="p-4 space-y-2">
-        <h3 className="font-bold text-foreground line-clamp-1 text-balance">{item.title}</h3>
+      <div className="p-3 space-y-2">
+        <h3 className="font-bold text-foreground line-clamp-1 text-xs text-balance">{item.title}</h3>
         <div className="flex items-center gap-2 text-xs text-muted-foreground font-semibold">
           <span>{item.year}</span>
           <span>•</span>

@@ -108,16 +108,17 @@ export function HeroSection({ items }: HeroSectionProps) {
   }
 
   return (
-    <section className="relative h-[50vh] md:h-[70vh] mt-16 overflow-hidden">
+    <section className="relative h-[50vh] md:h-[80vh] mt-16 overflow-hidden">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {items.map((item, index) => (
             <div key={index} className="flex-[0_0_100%] min-w-0 relative">
               <div className="absolute inset-0">
-                <img
-                  src={item.backdrop || item.image || "/placeholder.svg"}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
+                <div
+                  className="w-full h-full bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${item.backdrop || item.image || "/placeholder.svg"})`,
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -134,7 +135,7 @@ export function HeroSection({ items }: HeroSectionProps) {
                     </Badge>
                   </div>
 
-                  <h1 className="text-3xl md:text-6xl font-bold text-balance leading-tight">{item.title}</h1>
+                  <h1 className="text-4xl md:text-7xl font-bold text-balance leading-tight">{item.title}</h1>
 
                   <div className="flex items-center gap-4 text-xs md:text-sm font-semibold flex-wrap">
                     <span className="text-accent text-base md:text-lg">★ {item.rating}</span>
@@ -142,20 +143,20 @@ export function HeroSection({ items }: HeroSectionProps) {
                     <span className="text-muted-foreground">{item.type}</span>
                   </div>
 
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-pretty max-w-lg line-clamp-2 md:line-clamp-3">
+                  <p className="text-sm md:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl line-clamp-2 md:line-clamp-4">
                     {item.overview}
                   </p>
 
                   <div className="flex items-center gap-2 md:gap-4 pt-2 md:pt-4 flex-wrap">
                     <Link href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
-                      <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 px-4 md:px-8 font-bold border border-accent text-sm md:text-base">
-                        <Play className="h-4 w-4 md:h-5 md:w-5 fill-current" />
-                        Play
+                      <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 px-6 md:px-10 font-bold border border-accent text-sm md:text-lg">
+                        <Play className="h-4 w-4 md:h-6 md:w-6 fill-current" />
+                        Play Now
                       </Button>
                     </Link>
                     <Button
                       variant="outline"
-                      className={`gap-2 font-bold border text-sm md:text-base ${isSaved ? "border-accent bg-accent/20 text-accent" : "border-border text-foreground"}`}
+                      className={`gap-2 font-bold border text-sm md:text-base px-4 md:px-6 ${isSaved ? "border-accent bg-accent/20 text-accent" : "border-border text-foreground"}`}
                       onClick={handleSaveToggle}
                     >
                       {isSaved ? (
@@ -192,15 +193,15 @@ export function HeroSection({ items }: HeroSectionProps) {
       {/* Controls */}
       <button
         onClick={scrollPrev}
-        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
+        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 md:p-3 rounded-full transition-all border border-primary"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-5 w-5 md:h-7 md:w-7" />
       </button>
       <button
         onClick={scrollNext}
-        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
+        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 md:p-3 rounded-full transition-all border border-primary"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-5 w-5 md:h-7 md:w-7" />
       </button>
 
       {/* Pagination */}

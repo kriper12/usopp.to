@@ -108,14 +108,14 @@ export function HeroSection({ items }: HeroSectionProps) {
   }
 
   return (
-    <section className="relative h-[70vh] mt-16 overflow-hidden">
+    <section className="relative h-[50vh] md:h-[70vh] mt-16 overflow-hidden">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {items.map((item, index) => (
             <div key={index} className="flex-[0_0_100%] min-w-0 relative">
               <div className="absolute inset-0">
                 <img
-                  src={item.backdrop || "/placeholder.svg"}
+                  src={item.backdrop || item.image || "/placeholder.svg"}
                   alt={item.title}
                   className="w-full h-full object-cover"
                 />
@@ -123,8 +123,8 @@ export function HeroSection({ items }: HeroSectionProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
               </div>
 
-              <div className="relative ml-20 h-[70vh] flex items-center">
-                <div className="max-w-2xl space-y-6">
+              <div className="relative px-4 md:px-8 md:ml-20 h-full flex items-center">
+                <div className="max-w-2xl space-y-4 md:space-y-6">
                   <div className="flex items-center gap-3">
                     <Badge className="bg-accent text-accent-foreground border border-accent text-xs font-bold px-3 py-1">
                       HD
@@ -134,39 +134,39 @@ export function HeroSection({ items }: HeroSectionProps) {
                     </Badge>
                   </div>
 
-                  <h1 className="text-6xl font-bold text-balance leading-tight">{item.title}</h1>
+                  <h1 className="text-3xl md:text-6xl font-bold text-balance leading-tight">{item.title}</h1>
 
-                  <div className="flex items-center gap-4 text-sm font-semibold">
-                    <span className="text-accent text-lg">★ {item.rating}</span>
+                  <div className="flex items-center gap-4 text-xs md:text-sm font-semibold flex-wrap">
+                    <span className="text-accent text-base md:text-lg">★ {item.rating}</span>
                     <span className="text-muted-foreground">{item.year}</span>
                     <span className="text-muted-foreground">{item.type}</span>
                   </div>
 
-                  <p className="text-base text-muted-foreground leading-relaxed text-pretty max-w-lg line-clamp-3">
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-pretty max-w-lg line-clamp-2 md:line-clamp-3">
                     {item.overview}
                   </p>
 
-                  <div className="flex items-center gap-4 pt-4">
+                  <div className="flex items-center gap-2 md:gap-4 pt-2 md:pt-4 flex-wrap">
                     <Link href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
-                      <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 px-8 font-bold border border-accent">
-                        <Play className="h-5 w-5 fill-current" />
+                      <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 px-4 md:px-8 font-bold border border-accent text-sm md:text-base">
+                        <Play className="h-4 w-4 md:h-5 md:w-5 fill-current" />
                         Play
                       </Button>
                     </Link>
                     <Button
                       variant="outline"
-                      className={`gap-2 font-bold border ${isSaved ? "border-accent bg-accent/20 text-accent" : "border-border text-foreground"}`}
+                      className={`gap-2 font-bold border text-sm md:text-base ${isSaved ? "border-accent bg-accent/20 text-accent" : "border-border text-foreground"}`}
                       onClick={handleSaveToggle}
                     >
                       {isSaved ? (
                         <>
-                          <Check className="h-5 w-5" />
-                          Saved
+                          <Check className="h-4 w-4 md:h-5 md:w-5" />
+                          <span className="hidden sm:inline">Saved</span>
                         </>
                       ) : (
                         <>
-                          <Plus className="h-5 w-5" />
-                          Bookmark
+                          <Plus className="h-4 w-4 md:h-5 md:w-5" />
+                          <span className="hidden sm:inline">Bookmark</span>
                         </>
                       )}
                     </Button>
@@ -192,19 +192,19 @@ export function HeroSection({ items }: HeroSectionProps) {
       {/* Controls */}
       <button
         onClick={scrollPrev}
-        className="absolute left-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
+        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
       <button
         onClick={scrollNext}
-        className="absolute right-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
+        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-primary/60 hover:bg-primary text-white p-2 rounded-full transition-all border border-primary"
       >
         <ChevronRight className="h-6 w-6" />
       </button>
 
       {/* Pagination */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
         {items.map((_, index) => (
           <button
             key={index}

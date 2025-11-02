@@ -50,7 +50,10 @@ export function transformAniListToContentItem(item: AniListMedia): ContentItem {
     id: item.id,
     title,
     image: getImageUrl(item.coverImage.extraLarge || item.coverImage.large),
-    backdrop: getImageUrl(item.bannerImage),
+    backdrop:
+      getImageUrl(item.bannerImage) !== "/anime-cityscape.png"
+        ? getImageUrl(item.bannerImage)
+        : getImageUrl(item.coverImage.extraLarge || item.coverImage.large),
     rating: item.averageScore ? (item.averageScore / 10).toFixed(1) : "N/A",
     year,
     type,

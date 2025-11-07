@@ -1,3 +1,6 @@
+"use client"
+
+import type { ReactElement } from "react"
 import { getAnimeDetails } from "@/lib/anilist"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Play } from "lucide-react"
@@ -12,7 +15,16 @@ interface AnimeDetailsPageProps {
   searchParams: Promise<{ type?: string }>
 }
 
-export default async function AnimeDetailsPage({ params, searchParams }: AnimeDetailsPageProps) {
+function PageTitleUpdater({ animeTitle }: { animeTitle: string }) {
+  const React = require("react")
+  React.useEffect(() => {
+    document.title = `${animeTitle} - otaku-san`
+  }, [animeTitle])
+
+  return null
+}
+
+export default async function AnimeDetailsPage({ params, searchParams }: AnimeDetailsPageProps): Promise<ReactElement> {
   const { id } = await params
   const { type } = await searchParams
   const isMovie = type === "movie"
@@ -36,7 +48,8 @@ export default async function AnimeDetailsPage({ params, searchParams }: AnimeDe
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background" suppressHydrationWarning>
+      <PageTitleUpdater animeTitle={anime.title} />
       <Header />
       <Sidebar />
 

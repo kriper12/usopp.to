@@ -46,10 +46,9 @@ export function Header() {
     <header className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center gap-3">
             <Link href="/" className="hover:opacity-80 transition-opacity">
-              <Image src="/otaku-san-logo.png" alt="otaku-san Logo" width={36} height={36} className="object-contain" />
+              <Image src="/logo.png" alt="otaku-san Logo" width={40} height={40} className="object-contain" />
             </Link>
             <Link
               href="/"

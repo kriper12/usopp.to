@@ -1,5 +1,3 @@
-"use client"
-
 import type { ReactElement } from "react"
 import { getAnimeDetails } from "@/lib/anilist"
 import { Button } from "@/components/ui/button"
@@ -11,22 +9,13 @@ import { Header } from "@/components/header"
 import { Sidebar } from "@/components/sidebar"
 
 interface AnimeDetailsPageProps {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ type?: string }>
+  params: { id: string }
+  searchParams: { type?: string }
 }
 
-function PageTitleUpdater({ animeTitle }: { animeTitle: string }) {
-  const React = require("react")
-  React.useEffect(() => {
-    document.title = `${animeTitle} - otaku-san`
-  }, [animeTitle])
-
-  return null
-}
-
-export default async function AnimeDetailsPage({ params, searchParams }: AnimeDetailsPageProps): Promise<ReactElement> {
-  const { id } = await params
-  const { type } = await searchParams
+async function AnimeDetailsClientPage({ params, searchParams }: AnimeDetailsPageProps): Promise<ReactElement> {
+  const { id } = params
+  const { type } = searchParams
   const isMovie = type === "movie"
 
   const anime = await getAnimeDetails(Number.parseInt(id))
@@ -49,7 +38,6 @@ export default async function AnimeDetailsPage({ params, searchParams }: AnimeDe
 
   return (
     <div className="min-h-screen bg-background" suppressHydrationWarning>
-      <PageTitleUpdater animeTitle={anime.title} />
       <Header />
       <Sidebar />
 
@@ -137,3 +125,14 @@ export default async function AnimeDetailsPage({ params, searchParams }: AnimeDe
     </div>
   )
 }
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { id } = params
+  const anime = await getAnimeDetails(Number.parseInt(id))
+
+  return {
+    title: anime ? `${anime.title} - otaku-san` : "otaku-san",
+  }
+}
+
+export default AnimeDetailsClientPage

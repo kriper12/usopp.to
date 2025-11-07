@@ -23,6 +23,7 @@ export interface AniListMedia {
   nextAiringEpisode: {
     episode: number
   } | null
+  genres: string[]
 }
 
 export interface ContentItem {
@@ -34,6 +35,7 @@ export interface ContentItem {
   year: string
   type: string
   overview?: string
+  genres: string[]
 }
 
 export function getImageUrl(url: string | null): string {
@@ -58,6 +60,7 @@ export function transformAniListToContentItem(item: AniListMedia): ContentItem {
     year,
     type,
     overview: item.description?.replace(/<[^>]*>/g, "") || "",
+    genres: item.genres || [],
   }
 }
 
@@ -108,6 +111,7 @@ const TRENDING_QUERY = `
         format
         description
         episodes
+        genres
       }
     }
   }
@@ -133,6 +137,7 @@ const POPULAR_QUERY = `
         format
         description
         episodes
+        genres
       }
     }
   }
@@ -158,6 +163,7 @@ const TOP_RATED_QUERY = `
         format
         description
         episodes
+        genres
       }
     }
   }
@@ -183,6 +189,7 @@ const AIRING_QUERY = `
         format
         description
         episodes
+        genres
       }
     }
   }
@@ -208,6 +215,7 @@ const SEARCH_QUERY = `
         format
         description
         episodes
+        genres
       }
     }
   }
@@ -232,6 +240,7 @@ const DETAILS_QUERY = `
       format
       description
       episodes
+      genres
       status
       nextAiringEpisode {
         episode
@@ -452,6 +461,57 @@ export async function searchAnime(query: string): Promise<ContentItem[]> {
     return data.Page.media.map(transformAniListToContentItem)
   } catch (error) {
     console.error("Error searching anime:", error)
+    return []
+  }
+}
+
+const RELATED_ANIME_QUERY = `
+  query ($search: String, $page: Int, $perPage: Int) {
+    Page(page: $page, perPage: $perPage) {
+      media(search: $search, type: ANIME, sort: POPULARITY_DESC) {
+        id
+        title {
+          romaji
+          english
+          native
+        }
+        coverImage {
+          large
+          extraLarge
+        }
+        bannerImage
+        averageScore
+        seasonYear
+        format
+        description
+        episodes
+        genres
+      }
+    }
+  }
+`
+
+export async function getRelatedAnime(animeId: number, title: string): Promise<ContentItem[]> {
+  try {
+    // Extract base title (remove season numbers)
+    const baseTitleMatch = title.match(/^([^S\d]*?)(\s*(?:Season|S)\s*\d+)?$/i)
+    const baseTitle = baseTitleMatch ? baseTitleMatch[1].trim() : title
+
+    const data = await fetchFromAniList(RELATED_ANIME_QUERY, {
+      search: baseTitle,
+      page: 1,
+      perPage: 12,
+    })
+
+    if (!data?.Page?.media) return []
+
+    // Filter out the current anime and return up to 12 related items
+    return data.Page.media
+      .filter((item: AniListMedia) => item.id !== animeId)
+      .slice(0, 12)
+      .map(transformAniListToContentItem)
+  } catch (error) {
+    console.error("Error fetching related anime:", error)
     return []
   }
 }

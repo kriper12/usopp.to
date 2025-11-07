@@ -1,14 +1,8 @@
 import type React from "react"
 import Head from "next/head"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { DevtoolsBlocker } from "@/components/devtools-blocker"
 import "./globals.css"
-
-const geistSans = GeistSans.variable
-const geistMono = GeistMono.variable
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -25,17 +19,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           content="Discover and stream unlimited anime with otaku-san. Your ultimate destination for anime series and movies."
         />
       </Head>
-      <body className={`${geistSans} ${geistMono} antialiased`}>
+      <body className="antialiased">
         <DevtoolsBlocker />
-        <Suspense fallback={null}>
-          {children}
-          <Analytics />
-        </Suspense>
+        <Suspense fallback={null}>{children}</Suspense>
       </body>
     </html>
   )
 }
 
 export const metadata = {
-      generator: 'v0.app'
-    };
+  generator: "v0.app",
+}

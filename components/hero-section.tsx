@@ -108,7 +108,7 @@ export function HeroSection({ items }: HeroSectionProps) {
   }
 
   return (
-    <section className="relative h-[50vh] md:h-[80vh] mt-16 overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {items.map((item, index) => (
@@ -124,7 +124,7 @@ export function HeroSection({ items }: HeroSectionProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
               </div>
 
-              <div className="relative px-4 md:px-8 md:ml-20 h-full flex items-center">
+              <div className="relative px-4 md:px-8 md:ml-20 pt-20 md:pt-24">
                 <div className="max-w-2xl space-y-4 md:space-y-6">
                   <div className="flex items-center gap-3">
                     <Badge className="bg-accent text-accent-foreground border border-accent text-xs font-bold px-3 py-1">
@@ -148,7 +148,7 @@ export function HeroSection({ items }: HeroSectionProps) {
                   </p>
 
                   <div className="flex items-center gap-2 md:gap-4 pt-2 md:pt-4 flex-wrap">
-                    <Link href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
+                    <Link href={`/anime/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
                       <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 px-6 md:px-10 font-bold border border-accent text-sm md:text-lg">
                         <Play className="h-4 w-4 md:h-6 md:w-6 fill-current" />
                         Play Now

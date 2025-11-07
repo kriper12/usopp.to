@@ -5,11 +5,10 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import type { ContentItem } from "@/lib/anilist"
 import Link from "next/link"
-import { Play, Plus, Check, Search } from "lucide-react"
+import { Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { saveToMyRovex, removeFromMyRovex, isInMyRovex } from "@/lib/my-rovex"
-import { Input } from "@/components/ui/input"
 
 export function SearchResults() {
   const searchParams = useSearchParams()
@@ -109,59 +108,45 @@ export function SearchResults() {
         Search Results for "{query}" <span className="text-muted-foreground text-xl">({results.length})</span>
       </h1>
 
-      <form onSubmit={handleSearch} className="mb-8 w-full">
-        <div className="relative w-full max-w-full">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search for another anime..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="pl-10 w-full bg-secondary/50 border-secondary text-foreground placeholder:text-muted-foreground"
-          />
-        </div>
-      </form>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
         {results.map((item) => (
-          <div key={item.id} className="group relative">
-            <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-secondary">
+          <Link
+            key={item.id}
+            href={`/anime/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}
+            className="group"
+          >
+            <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-secondary mb-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2">
               <Image
                 src={item.image || "/placeholder.svg"}
                 alt={item.title}
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Link href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
-                      <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                        <Play className="h-4 w-4 mr-1" />
-                        Play
-                      </Button>
-                    </Link>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-white/20 hover:bg-white/10 bg-transparent"
-                      onClick={() => toggleSave(item)}
-                    >
-                      {savedItems.has(item.id) ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                    </Button>
-                  </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <Link href={`/anime/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}>
+                  <Button
+                    size="icon"
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full h-12 w-12 shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-200"
+                  >
+                    <Play className="h-5 w-5 fill-current" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="absolute top-3 right-3 z-10">
+                <div className="bg-accent/90 text-accent-foreground border border-accent/50 text-xs font-bold px-2 py-1 rounded-full shadow-lg backdrop-blur-sm">
+                  {item.rating}
                 </div>
               </div>
             </div>
-            <div className="mt-2">
-              <h3 className="font-medium text-sm text-foreground line-clamp-1">{item.title}</h3>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-foreground line-clamp-2 text-sm leading-tight">{item.title}</h3>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
                 <span>{item.year}</span>
-                <span>•</span>
-                <span className="text-primary">★ {item.rating}</span>
+                <span className="text-muted-foreground/50">•</span>
+                <span className="text-accent">★ {item.rating}</span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 

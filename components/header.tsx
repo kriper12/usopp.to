@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { Search, Bell, User, Menu, X, Globe } from "lucide-react"
+import { Search, Bell, User, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
@@ -13,16 +13,17 @@ import Image from "next/image"
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [recentSearches, setRecentSearches] = useState<string[]>([])
+  const [showRecentSearches, setShowRecentSearches] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [titleLanguage, setTitleLanguage] = useState<"english" | "japanese">("english")
   const router = useRouter()
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  // Load settings from localStorage on mount
+  // Load recent searches from localStorage on mount
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("titleLanguage") as "english" | "japanese" | null
-    if (savedLanguage) {
-      setTitleLanguage(savedLanguage)
+    const saved = localStorage.getItem("recentSearches")
+    if (saved) {
+      setRecentSearches(JSON.parse(saved))
     }
   }, [])
 
@@ -30,26 +31,30 @@ export function Header() {
     e.preventDefault()
     const searchTerm = query || searchQuery.trim()
     if (searchTerm) {
+      // Add to recent searches
+      const updated = [searchTerm, ...recentSearches.filter((s) => s !== searchTerm)].slice(0, 5)
+      setRecentSearches(updated)
+      localStorage.setItem("recentSearches", JSON.stringify(updated))
+
       router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
       setIsSearchOpen(false)
       setSearchQuery("")
+      setShowRecentSearches(false)
     }
   }
 
-  const toggleLanguage = () => {
-    const newLanguage = titleLanguage === "english" ? "japanese" : "english"
-    setTitleLanguage(newLanguage)
-    localStorage.setItem("titleLanguage", newLanguage)
+  const clearRecentSearches = () => {
+    setRecentSearches([])
+    localStorage.removeItem("recentSearches")
   }
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur">
+    <header className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur border-b border-border">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link href="/" className="hover:opacity-80 transition-opacity">
-              <Image src="/logo.png" alt="otaku-san Logo" width={40} height={40} className="object-contain" />
-            </Link>
+            <Image src="/otaku-san-logo.png" alt="otaku-san Logo" width={36} height={36} className="object-contain" />
             <Link
               href="/"
               className="text-xl font-bold text-foreground hover:text-accent transition-colors hidden sm:block"
@@ -59,6 +64,26 @@ export function Header() {
           </div>
 
           {/* Center Navigation - Hidden on Mobile */}
+          <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            <Link
+              href="/continue-watching"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              My library
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Schedule
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Manga
+            </Link>
+            <Link href="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Discover
+            </Link>
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              AniList
+            </Link>
+          </nav>
 
           {/* Right Actions */}
           <div className="flex items-center gap-4">
@@ -75,6 +100,7 @@ export function Header() {
                   autoFocus
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setShowRecentSearches(true)}
                 />
                 <Button
                   type="button"
@@ -82,11 +108,38 @@ export function Header() {
                   size="icon"
                   onClick={() => {
                     setIsSearchOpen(false)
+                    setShowRecentSearches(false)
                   }}
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-5 w-5" />
                 </Button>
+
+                {/* Recent Searches Dropdown */}
+                {showRecentSearches && recentSearches.length > 0 && (
+                  <div className="absolute top-full mt-2 w-full sm:w-64 bg-card border border-border rounded-lg shadow-lg left-0 z-50">
+                    <div className="p-3 space-y-2 max-h-48 overflow-y-auto">
+                      {recentSearches.map((search) => (
+                        <button
+                          key={search}
+                          onClick={(e) => handleSearch(e as any, search)}
+                          className="w-full text-left px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary rounded transition-colors"
+                        >
+                          {search}
+                        </button>
+                      ))}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          clearRecentSearches()
+                        }}
+                        className="w-full text-left px-3 py-2 text-xs text-muted-foreground hover:text-destructive transition-colors border-t border-border pt-2 mt-2"
+                      >
+                        Clear history
+                      </button>
+                    </div>
+                  </div>
+                )}
               </form>
             ) : (
               <Button
@@ -98,38 +151,6 @@ export function Header() {
                 <Search className="h-5 w-5" />
               </Button>
             )}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground hover:text-foreground hidden md:flex"
-                  title="Toggle title language"
-                >
-                  <Globe className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-card border border-border">
-                <DropdownMenuItem
-                  onClick={() => {
-                    setTitleLanguage("english")
-                    localStorage.setItem("titleLanguage", "english")
-                  }}
-                  className={titleLanguage === "english" ? "bg-accent/20" : ""}
-                >
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    setTitleLanguage("japanese")
-                    localStorage.setItem("titleLanguage", "japanese")
-                  }}
-                  className={titleLanguage === "japanese" ? "bg-accent/20" : ""}
-                >
-                  Japanese
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
             <Button
               variant="ghost"
               size="icon"

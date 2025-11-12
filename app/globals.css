@@ -4,76 +4,74 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* CHANGE: Updated to new color scheme with Midnight Charcoal background and soft lavender accents */
-  --background: #1c1b22; /* Midnight Charcoal - Main Background */
-  --foreground: #eaeaea; /* Off-White - Text Color */
-  --card: #1c1b22; /* Same as background for seamless cards */
-  --card-foreground: #eaeaea;
-  --popover: #1c1b22;
-  --popover-foreground: #eaeaea;
-  --primary: #b9a7ff; /* Soft Lavender - Active buttons and primary elements */
-  --primary-foreground: #1c1b22;
-  --secondary: #ffb7c5; /* Blush Pink - Accent UI elements and hover effects */
-  --secondary-foreground: #1c1b22;
-  --muted: #a1a1aa; /* Misty Gray - Muted elements */
-  --muted-foreground: #a1a1aa;
-  --accent: #68f0c1; /* Electric Teal - Eye-catching highlights and buttons */
-  --accent-foreground: #1c1b22;
-  --destructive: #ffb7c5; /* Use Blush Pink for destructive actions */
-  --destructive-foreground: #1c1b22;
-  --border: transparent; /* Changed from Misty Gray to transparent to remove white lines */
-  --input: #1c1b22;
-  --ring: #68f0c1; /* Electric Teal for focus rings */
-  --chart-1: #b9a7ff;
-  --chart-2: #ffb7c5;
-  --chart-3: #68f0c1;
-  --chart-4: #b9a7ff;
-  --chart-5: #68f0c1;
+  --background: #0f1419; /* Deep dark blue-black */
+  --foreground: #ffffff; /* White text */
+  --card: #1a1f2e; /* Darker card background */
+  --card-foreground: #ffffff;
+  --popover: #0f1419;
+  --popover-foreground: #ffffff;
+  --primary: #6366f1; /* Indigo primary */
+  --primary-foreground: #ffffff;
+  --secondary: #4f46e5; /* Deeper indigo secondary */
+  --secondary-foreground: #ffffff;
+  --muted: #2d3142;
+  --muted-foreground: #a1a5b4;
+  --accent: #06b6d4; /* Cyan accent */
+  --accent-foreground: #000000;
+  --destructive: #ff4757;
+  --destructive-foreground: #ffffff;
+  --border: #2d3142;
+  --input: #1a1f2e;
+  --ring: #06b6d4;
+  --chart-1: #6366f1;
+  --chart-2: #4f46e5;
+  --chart-3: #06b6d4;
+  --chart-4: #7c3aed;
+  --chart-5: #3b82f6;
   --radius: 0.5rem;
-  --sidebar: #1c1b22;
-  --sidebar-foreground: #eaeaea;
-  --sidebar-primary: #b9a7ff;
-  --sidebar-primary-foreground: #1c1b22;
-  --sidebar-accent: #68f0c1;
-  --sidebar-accent-foreground: #1c1b22;
-  --sidebar-border: #a1a1aa;
-  --sidebar-ring: #68f0c1;
+  --sidebar: #0f1419;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #06b6d4;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: #2d3142;
+  --sidebar-ring: #06b6d4;
 }
 
 .dark {
-  /* CHANGE: Updated dark mode to match new color scheme */
-  --background: #1c1b22;
-  --foreground: #eaeaea;
-  --card: #1c1b22;
-  --card-foreground: #eaeaea;
-  --popover: #1c1b22;
-  --popover-foreground: #eaeaea;
-  --primary: #b9a7ff;
-  --primary-foreground: #1c1b22;
-  --secondary: #ffb7c5;
-  --secondary-foreground: #1c1b22;
-  --muted: #a1a1aa;
-  --muted-foreground: #a1a1aa;
-  --accent: #68f0c1;
-  --accent-foreground: #1c1b22;
-  --destructive: #ffb7c5;
-  --destructive-foreground: #1c1b22;
-  --border: transparent; /* Changed from Misty Gray to transparent to remove white lines */
-  --input: #1c1b22;
-  --ring: #68f0c1;
-  --chart-1: #b9a7ff;
-  --chart-2: #ffb7c5;
-  --chart-3: #68f0c1;
-  --chart-4: #b9a7ff;
-  --chart-5: #68f0c1;
-  --sidebar: #1c1b22;
-  --sidebar-foreground: #eaeaea;
-  --sidebar-primary: #b9a7ff;
-  --sidebar-primary-foreground: #1c1b22;
-  --sidebar-accent: #68f0c1;
-  --sidebar-accent-foreground: #1c1b22;
-  --sidebar-border: #a1a1aa;
-  --sidebar-ring: #68f0c1;
+  --background: #0f1419;
+  --foreground: #ffffff;
+  --card: #1a1f2e;
+  --card-foreground: #ffffff;
+  --popover: #0f1419;
+  --popover-foreground: #ffffff;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #4f46e5;
+  --secondary-foreground: #ffffff;
+  --muted: #2d3142;
+  --muted-foreground: #a1a5b4;
+  --accent: #06b6d4;
+  --accent-foreground: #000000;
+  --destructive: #ff4757;
+  --destructive-foreground: #ffffff;
+  --border: #2d3142;
+  --input: #1a1f2e;
+  --ring: #06b6d4;
+  --chart-1: #6366f1;
+  --chart-2: #4f46e5;
+  --chart-3: #06b6d4;
+  --chart-4: #7c3aed;
+  --chart-5: #3b82f6;
+  --sidebar: #0f1419;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #06b6d4;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: #2d3142;
+  --sidebar-ring: #06b6d4;
 }
 
 @theme inline {

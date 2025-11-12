@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
-import { Sidebar } from "@/components/sidebar"
 import { Footer } from "@/components/footer"
 import { getSavedItems, removeItem, type SavedItem } from "@/lib/my-rovex"
 import { Card } from "@/components/ui/card"
@@ -26,8 +25,7 @@ export default function MyRovexPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <Sidebar />
-      <main className="ml-20 pt-24 px-8">
+      <main className="container mx-auto px-4 lg:px-8 pt-24 pb-16">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">My List</h1>
           <p className="text-muted-foreground">Your saved movies and TV shows</p>
@@ -43,7 +41,7 @@ export default function MyRovexPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-20">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {savedItems.map((item) => (
               <Card
                 key={`${item.type}-${item.id}`}

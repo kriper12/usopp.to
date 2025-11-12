@@ -23,7 +23,7 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop Sidebar - Hidden on Mobile */}
-      <aside className="hidden sm:flex fixed left-0 top-0 w-20 h-screen bg-background flex-col items-center py-6 gap-8 pt-24">
+      <aside className="hidden sm:flex fixed left-0 top-0 w-20 h-screen bg-background border-r border-border flex-col items-center py-6 gap-8 pt-24">
         {/* Main Menu */}
         <nav className="flex flex-col gap-4">
           {menuItems.map((item) => (
@@ -66,7 +66,7 @@ export function Sidebar() {
       </aside>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 bg-background flex justify-around items-center h-16 z-40">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-border flex justify-around items-center h-16 z-40">
         {menuItems.map((item) => (
           <Link key={item.href} href={item.href}>
             <Button

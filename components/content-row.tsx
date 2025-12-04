@@ -50,26 +50,36 @@ export function ContentRow({ title, items, showThumbnails = false }: ContentRowP
 
   if (showThumbnails) {
     return (
-      <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
-        {displayItems.slice(0, 8).map((item) => (
-          <Link
-            key={item.id}
-            href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}
-            className="group relative flex-shrink-0 w-40 h-56 rounded-lg overflow-hidden bg-secondary hover:ring-2 hover:ring-accent transition-all"
-          >
-            <img
-              src={item.image || "/placeholder.svg"}
-              alt={item.title}
-              className="w-full h-full object-cover transition-transform group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <Play className="h-8 w-8 text-white" fill="white" />
+      <div className="relative px-4 md:px-8">
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
+          {displayItems.slice(0, 8).map((item, index) => (
+            <div key={item.id} className="flex-shrink-0 group relative">
+              <div className="flex items-end gap-3 mb-2">
+                {/* Vertical Category Label */}
+                <div className="text-xs font-bold text-accent vertical-text writing-vertical-rl rotate-180">
+                  {["Trending", "Action", "Drama", "Comedy", "Romance", "Fantasy", "Sci-Fi", "Mystery"][index % 8]}
+                </div>
+                <span className="text-sm font-bold text-accent">{String(index + 1).padStart(2, "0")}</span>
+              </div>
+              <Link
+                href={`/watch/${item.id}?type=${item.type === "Movie" ? "movie" : "tv"}`}
+                className="block w-40 h-56 rounded-lg overflow-hidden bg-secondary hover:ring-2 hover:ring-accent transition-all"
+              >
+                <img
+                  src={item.image || "/placeholder.svg"}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Play className="h-8 w-8 text-white" fill="white" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent text-white">
+                  <p className="text-xs font-semibold line-clamp-2">{item.title}</p>
+                </div>
+              </Link>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent text-white">
-              <p className="text-xs font-semibold line-clamp-2">{item.title}</p>
-            </div>
-          </Link>
-        ))}
+          ))}
+        </div>
       </div>
     )
   }

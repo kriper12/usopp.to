@@ -4,39 +4,40 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #0f1419; /* Deep dark blue-black */
-  --foreground: #ffffff; /* White text */
-  --card: #1a1f2e; /* Darker card background */
-  --card-foreground: #ffffff;
-  --popover: #0f1419;
-  --popover-foreground: #ffffff;
-  --primary: #6366f1; /* Indigo primary */
+  /* Updated to cozy pink color scheme */
+  --background: #faf7f2; /* Soft cream background */
+  --foreground: #2d2d2d; /* Dark text */
+  --card: #fef9f5; /* Light card background */
+  --card-foreground: #2d2d2d;
+  --popover: #faf7f2;
+  --popover-foreground: #2d2d2d;
+  --primary: #d97a7a; /* Warm rose pink */
   --primary-foreground: #ffffff;
-  --secondary: #4f46e5; /* Deeper indigo secondary */
-  --secondary-foreground: #ffffff;
-  --muted: #2d3142;
-  --muted-foreground: #a1a5b4;
-  --accent: #06b6d4; /* Cyan accent */
-  --accent-foreground: #000000;
-  --destructive: #ff4757;
+  --secondary: #e8b4b8; /* Soft pink */
+  --secondary-foreground: #2d2d2d;
+  --muted: #e8ddd5;
+  --muted-foreground: #7a7a7a;
+  --accent: #c98aa0; /* Dusty mauve pink */
+  --accent-foreground: #ffffff;
+  --destructive: #ff6b6b;
   --destructive-foreground: #ffffff;
-  --border: #2d3142;
-  --input: #1a1f2e;
-  --ring: #06b6d4;
-  --chart-1: #6366f1;
-  --chart-2: #4f46e5;
-  --chart-3: #06b6d4;
-  --chart-4: #7c3aed;
-  --chart-5: #3b82f6;
+  --border: #e8ddd5;
+  --input: #fef9f5;
+  --ring: #d97a7a;
+  --chart-1: #d97a7a;
+  --chart-2: #e8b4b8;
+  --chart-3: #c98aa0;
+  --chart-4: #d4a5a5;
+  --chart-5: #e0c9cc;
   --radius: 0.5rem;
-  --sidebar: #0f1419;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #6366f1;
+  --sidebar: #faf7f2;
+  --sidebar-foreground: #2d2d2d;
+  --sidebar-primary: #d97a7a;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #06b6d4;
-  --sidebar-accent-foreground: #000000;
-  --sidebar-border: #2d3142;
-  --sidebar-ring: #06b6d4;
+  --sidebar-accent: #c98aa0;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #e8ddd5;
+  --sidebar-ring: #d97a7a;
 }
 
 .dark {

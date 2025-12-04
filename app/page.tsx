@@ -54,7 +54,7 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5" />
         <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -110,15 +110,15 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            {/* Right - Anime Character Placeholder */}
+            {/* Right - Sayori Character Replace emoji with actual character image */}
             <div className="relative h-96 md:h-full min-h-96 flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-accent/20 rounded-3xl blur-3xl" />
-              <div className="relative z-10 text-center">
-                <div className="inline-block">
-                  <div className="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full flex items-center justify-center text-6xl">
-                    🎌
-                  </div>
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-accent/10 rounded-3xl blur-3xl" />
+              <div className="relative z-10">
+                <img
+                  src="/sayori-character.jpg"
+                  alt="Sayori - sayori.to mascot"
+                  className="h-96 md:h-[500px] w-auto object-contain drop-shadow-2xl"
+                />
               </div>
             </div>
           </div>

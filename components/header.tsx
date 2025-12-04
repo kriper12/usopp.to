@@ -59,16 +59,13 @@ export function Header() {
               href="/"
               className="text-xl font-bold text-foreground hover:text-accent transition-colors hidden sm:block"
             >
-              otaku-san
+              sayori.to
             </Link>
           </div>
 
           {/* Center Navigation - Hidden on Mobile */}
           <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            <Link
-              href="/continue-watching"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               My library
             </Link>
             <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -77,8 +74,8 @@ export function Header() {
             <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Manga
             </Link>
-            <Link href="/tv-shows" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Discover
+            <Link href="/home" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Home
             </Link>
             <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               AniList
@@ -199,7 +196,7 @@ export function Header() {
         {isMobileMenuOpen && (
           <nav className="md:hidden pb-4 space-y-2 border-t border-border pt-4">
             <Link
-              href="/continue-watching"
+              href="/"
               className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary rounded transition-colors"
             >
               My library
@@ -217,10 +214,10 @@ export function Header() {
               Manga
             </Link>
             <Link
-              href="/tv-shows"
+              href="/home"
               className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary rounded transition-colors"
             >
-              Discover
+              Home
             </Link>
             <Link
               href="/"

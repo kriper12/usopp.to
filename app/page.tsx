@@ -36,11 +36,11 @@ export default function LandingPage() {
             <span className="text-2xl font-bold text-primary">sayori.to</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-foreground/70">
-            <Link href="#" className="hover:text-primary transition">
+            <Link href="/" className="hover:text-primary transition">
               Home
             </Link>
-            <Link href="/browse" className="hover:text-primary transition">
-              Browse
+            <Link href="/home" className="hover:text-primary transition">
+              Anime
             </Link>
             <Link href="#" className="hover:text-primary transition">
               Top Airing
